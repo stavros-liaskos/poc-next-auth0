@@ -24,8 +24,27 @@ export default function External() {
       setState(previous => ({ ...previous, isLoading: false }));
     }
   };
+  const callApiS = async () => {
+    setState(previous => ({ ...previous, isLoading: true }));
+
+    try {
+      const response = await fetch('/artist/search?pattern=sear');
+      const data = await response.json();
+
+      setState(previous => ({ ...previous, response: data, error: undefined }));
+    } catch (error) {
+      setState(previous => ({ ...previous, response: undefined, error }));
+    } finally {
+      setState(previous => ({ ...previous, isLoading: false }));
+    }
+  };
 
   const handle = (event, fn) => {
+    event.preventDefault();
+    fn();
+  };
+
+  const handleS = (event, fn) => {
     event.preventDefault();
     fn();
   };
@@ -51,7 +70,10 @@ export default function External() {
           </p>
         </div>
         <Button color="primary" className="mt-5" onClick={e => handle(e, callApi)} data-testid="external-action">
-          Ping API
+          Ping test-ui
+        </Button>
+        <Button color="primary" className="mt-5" onClick={e => handleS(e, callApiS)} data-testid="external-action">
+          Ping search
         </Button>
       </div>
       <div className="result-block-container">
