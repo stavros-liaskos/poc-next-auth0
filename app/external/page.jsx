@@ -14,7 +14,7 @@ export default function External() {
     setState(previous => ({ ...previous, isLoading: true }));
 
     try {
-      const response = await fetch('https://api.releaseraccoon.online/artist/search?pattern=sear');
+      const response = await fetch('/test-ui/test-ui');
       const data = await response.json();
 
       setState(previous => ({ ...previous, response: data, error: undefined }));
